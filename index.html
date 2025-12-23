@@ -2,34 +2,87 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Redirecionando para App</title>
-    
-    <!-- ESSA É A LINHA MAIS IMPORTANTE -->
-    <meta http-equiv="refresh" content="0; url=https://script.google.com/macros/s/AKfycbztnW_UnBNj8fMvrdQoiaM4c6DOwObOtHzCewRatxXS8yYVF2gkMNK2CekvQ6iRxM089g/exec">
-    
-    <!-- Fallback com JavaScript -->
-    <script type="text/javascript">
-        window.location.href = "https://script.google.com/macros/s/AKfycbztnW_UnBNj8fMvrdQoiaM4c6DOwObOtHzCewRatxXS8yYVF2gkMNK2CekvQ6iRxM089g/exec";
-    </script>
+    <title>App Miranda Empório</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        .iframe-container {
+            width: 100%;
+            height: 100vh;
+            border: none;
+        }
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .error-message {
+            display: none;
+            padding: 20px;
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 5px;
+            margin: 20px;
+        }
+    </style>
 </head>
-<body style="margin:0; padding:20px; font-family:Arial; background:#f5f5f5;">
-    <div style="max-width:600px; margin:100px auto; background:white; padding:40px; border-radius:10px; text-align:center; box-shadow:0 5px 20px rgba(0,0,0,0.1);">
-        <div style="font-size:50px; margin-bottom:20px;">⏳</div>
-        <h1 style="color:#333;">Redirecionando para o aplicativo...</h1>
-        <p style="color:#666; margin-bottom:30px;">Se o redirecionamento não funcionar automaticamente em 5 segundos, clique no link abaixo:</p>
-        
-        <!-- Link clicável como backup -->
-        <a href="https://script.google.com/macros/s/AKfycbxyOyXCSY52ZcwdC1r0SSHGGWZfy8pi_exdra14ggw3-L2tVmaWYotR3lWRaqZy5Wv4/exec" 
-           style="display:inline-block; background:#4285f4; color:white; padding:12px 30px; text-decoration:none; border-radius:5px; font-weight:bold;">
-           ACESSAR APLICATIVO
-        </a>
-        
-        <!-- Mensagem técnica -->
-        <div style="margin-top:40px; padding:15px; background:#fff3cd; border-left:4px solid #ffc107; text-align:left; border-radius:4px;">
-            <p style="margin:0; color:#856404; font-size:14px;">
-                <strong>Nota:</strong> Este aplicativo requer que o Google Apps Script esteja configurado como "Aplicação Web" com acesso público.
-            </p>
-        </div>
+<body>
+    <!-- Mensagem de carregamento -->
+    <div class="loading" id="loading">
+        <div style="font-size: 40px;">⏳</div>
+        <h2>Carregando aplicativo...</h2>
     </div>
+
+    <!-- Mensagem de erro (inicialmente oculta) -->
+    <div class="error-message" id="errorMessage">
+        <h3>⚠️ Não foi possível carregar o aplicativo</h3>
+        <p>Possíveis causas:</p>
+        <ul>
+            <li>O Apps Script não está configurado como "Aplicação Web"</li>
+            <li>A configuração de acesso não está como "Qualquer pessoa"</li>
+            <li>O Apps Script não permite ser exibido em iframe</li>
+        </ul>
+        <p><a href="#" id="directLink">Tentar abrir em nova janela</a></p>
+    </div>
+
+    <!-- Iframe que carrega o Apps Script -->
+    <iframe 
+        src="https://script.google.com/macros/s/AKfycbztnW_UnBNj8fMvrdQoiaM4c6DOwObOtHzCewRatxXS8yYVF2gkMNK2CekvQ6iRxM089g/exec"
+        class="iframe-container"
+        id="appFrame"
+        allow="camera;microphone"
+        sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-modals"
+        onload="document.getElementById('loading').style.display='none';"
+        onerror="showError()">
+    </iframe>
+
+    <script>
+        // URL do seu Apps Script
+        const appScriptUrl = "https://script.google.com/macros/s/AKfycbztnW_UnBNj8fMvrdQoiaM4c6DOwObOtHzCewRatxXS8yYVF2gkMNK2CekvQ6iRxM089g/exec";
+        
+        // Configurar link direto
+        document.getElementById('directLink').href = appScriptUrl;
+        
+        function showError() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('appFrame').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'block';
+        }
+        
+        // Timeout para mostrar erro se demorar muito
+        setTimeout(function() {
+            if (document.getElementById('loading').style.display !== 'none') {
+                showError();
+            }
+        }, 10000); // 10 segundos
+    </script>
 </body>
 </html>
