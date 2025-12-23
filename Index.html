@@ -1,10 +1,141 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecionando para Google Apps Script</title>
+    <!-- Redirecionamento imediato -->
     <meta http-equiv="refresh" content="0; url=https://script.google.com/macros/s/AKfycbxyOyXCSY52ZcwdC1r0SSHGGWZfy8pi_exdra14ggw3-L2tVmaWYotR3lWRaqZy5Wv4/exec">
-    <script>window.location.href = "https://script.google.com/macros/s/AKfycbxyOyXCSY52ZcwdC1r0SSHGGWZfy8pi_exdra14ggw3-L2tVmaWYotR3lWRaqZy5Wv4/exec";</script>
+    <script>
+        // Redirecionamento via JavaScript como fallback
+        window.location.href = "https://script.google.com/macros/s/AKfycbxyOyXCSY52ZcwdC1r0SSHGGWZfy8pi_exdra14ggw3-L2tVmaWYotR3lWRaqZy5Wv4/exec";
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 30px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+        
+        .link {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .warning {
+            background: rgba(255, 193, 7, 0.2);
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 30px;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <p>Redirecionando... <a href="https://script.google.com/macros/s/AKfycbxyOyXCSY52ZcwdC1r0SSHGGWZfy8pi_exdra14ggw3-L2tVmaWYotR3lWRaqZy5Wv4/exec">Clique aqui se não for redirecionado</a></p>
+    <div class="container">
+        <div class="loader"></div>
+        <h1>Redirecionando...</h1>
+        <p>Você está sendo redirecionado para o Google Apps Script.</p>
+        <p>Se o redirecionamento não funcionar automaticamente, clique no botão abaixo:</p>
+        <a href="https://script.google.com/macros/s/AKfycbxyOyXCSY52ZcwdC1r0SSHGGWZfy8pi_exdra14ggw3-L2tVmaWYotR3lWRaqZy5Wv4/exec" 
+           class="link">
+           Acessar Google Apps Script
+        </a>
+        
+        <div class="warning">
+            <strong>Importante:</strong> Este link requer permissão de acesso. Certifique-se de que você tem as permissões necessárias para acessar este recurso.
+        </div>
+    </div>
+    
+    <!-- Script para garantir o redirecionamento -->
+    <script>
+        // Fallback adicional após 3 segundos
+        setTimeout(function() {
+            window.location.href = "https://script.google.com/macros/s/AKfycbxyOyXCSY52ZcwdC1r0SSHGGWZfy8pi_exdra14ggw3-L2tVmaWYotR3lWRaqZy5Wv4/exec";
+        }, 3000);
+        
+        // Monitorar cliques para evitar problemas de popup
+        document.addEventListener('click', function(e) {
+            if (e.target.tagName === 'A' && e.target.href.includes('script.google.com')) {
+                e.preventDefault();
+                window.location.href = e.target.href;
+            }
+        });
+    </script>
 </body>
 </html>
